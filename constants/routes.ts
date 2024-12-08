@@ -12,7 +12,7 @@ export const SIDEBAR_GROUPS = [OVERVIEW_GROUP, MANAGE_GROUP];
 export const SIDEBAR_ROUTES = [
   {
     title: "Dashboard",
-    url: "/admin/dashboard",
+    url: "/admin/overview/dashboard",
     icon: LayoutDashboard,
     group: OVERVIEW_GROUP,
   },
