@@ -13,7 +13,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="w-full p-6">
           <header>
             <nav className="flex items-center justify-between">
-              <div className="flex items-center gap-x-4">
+              <div className="flex items-center gap-x-2">
                 <SidebarTrigger />
                 <NavigationBreadcrumb />
               </div>
