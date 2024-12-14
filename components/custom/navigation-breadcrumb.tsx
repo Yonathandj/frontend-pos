@@ -15,7 +15,7 @@ import { usePathname } from "next/navigation";
 import { Slash } from "lucide-react";
 
 const NavigationBreadcrumb = () => {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
   return (
     <Breadcrumb>

@@ -1,8 +1,6 @@
-import { ProductCategoryProps } from "@/types/products";
-
 import { Beef, Dessert, Martini, Salad } from "lucide-react";
 
-export const PRODUCT_CATEGORIES: ProductCategoryProps[] = [
+export const PRODUCT_CATEGORIES = [
   {
     title: "Appetizers",
     icon: Salad,

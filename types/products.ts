@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { addProductSchema } from "@/validations/products";
+
 import type { LucideIcon } from "lucide-react";
 
 export interface ProductCategoryProps {
@@ -6,3 +9,5 @@ export interface ProductCategoryProps {
   total: number;
   backgroundColor: string;
 }
+
+export type AddProductSchema = z.infer<typeof addProductSchema>;

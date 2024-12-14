@@ -20,7 +20,7 @@ import { SIDEBAR_GROUPS, SIDEBAR_ROUTES } from "@/constants/routes";
 
 const NavigationSidebar = () => {
   const { open } = useSidebar();
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
 
   return (
     <Sidebar variant="floating" collapsible="icon">
