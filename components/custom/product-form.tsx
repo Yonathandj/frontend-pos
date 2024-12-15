@@ -44,14 +44,12 @@ import { NumericFormat } from "react-number-format";
 
 const ProductForm = () => {
   const form = useForm<AddProductSchema>({
-    mode: "onBlur",
-    reValidateMode: "onSubmit",
     resolver: zodResolver(addProductSchema),
     defaultValues: {
       name: "",
       description: "",
       category: "",
-      price: "Rp0",
+      price: "",
     },
   });
 
@@ -67,7 +65,7 @@ const ProductForm = () => {
           Add product
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-w-[640px]">
         <DialogHeader>
           <DialogTitle>Add Product to Catalog</DialogTitle>
           <DialogDescription>
@@ -127,7 +125,13 @@ const ProductForm = () => {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="-" />
+                          <SelectValue
+                            placeholder={
+                              <span className="text-muted-foreground">
+                                Tell us about your product category
+                              </span>
+                            }
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent position="item-aligned">
@@ -148,20 +152,25 @@ const ProductForm = () => {
               <FormField
                 control={form.control}
                 name="price"
-                render={({ field: { ref, ...restField } }) => (
+                render={({ field: { ref, onChange, ...rest } }) => (
                   <FormItem className="w-2/4">
                     <FormLabel>Price</FormLabel>
                     <FormControl>
                       <NumericFormat
+                        placeholder="Tell us about your product price"
                         autoComplete="off"
+                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                        // react number format attributes
+                        getInputRef={ref}
                         prefix="Rp"
+                        allowNegative={false}
                         thousandSeparator="."
                         decimalSeparator=","
                         decimalScale={2}
-                        allowNegative={false}
-                        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-                        getInputRef={ref}
-                        {...restField}
+                        onValueChange={(value) => {
+                          onChange(value.formattedValue);
+                        }}
+                        {...rest}
                       />
                     </FormControl>
                     <FormMessage />
@@ -169,8 +178,8 @@ const ProductForm = () => {
                 )}
               />
             </div>
-            <DialogFooter className="mt-4">
-              <Button>Submit</Button>
+            <DialogFooter>
+              <Button type="submit">Submit</Button>
               <DialogClose asChild>
                 <Button variant="destructive">Cancel</Button>
               </DialogClose>
