@@ -1,6 +1,10 @@
 import { z } from "zod";
 
-import { PRODUCT_CATEGORIES } from "@/constants/products";
+import {
+  PRODUCT_CATEGORIES,
+  PRODUCT_IMAGE_ACCEPTABLE_TYPES,
+  PRODUCT_IMAGE_MAX_SIZE,
+} from "@/constants/products";
 
 export const addProductSchema = z.object({
   name: z
@@ -23,7 +27,7 @@ export const addProductSchema = z.object({
         }
       }
       return false;
-    }, "One of the categories provided must be selected"),
+    }, "One of the categories provided must be selected."),
   price: z
     .string()
     .trim()
@@ -31,5 +35,18 @@ export const addProductSchema = z.object({
       return (
         parseFloat(value === "" ? "Rp0".substring(2) : value.substring(2)) > 0
       );
-    }, "Price must be higher than 0"),
+    }, "Price must be higher than 0."),
+  images: z
+    .array(
+      z
+        .instanceof(File)
+        .refine((value) => {
+          return value.size < PRODUCT_IMAGE_MAX_SIZE;
+        }, "Image size must be less than 10 MB.")
+        .refine((value) => {
+          return PRODUCT_IMAGE_ACCEPTABLE_TYPES.includes(value.type);
+        }, "Image type must be PNG, JPG, or JPEG."),
+    )
+    .min(1, "The minimum number of images uploaded is 1.")
+    .max(4, "The maximum number of images uploaded is 4."),
 });

@@ -34,13 +34,20 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { PackagePlus } from "lucide-react";
+import { PackagePlus, X } from "lucide-react";
 
-import { PRODUCT_CATEGORIES } from "@/constants/products";
+import {
+  PRODUCT_CATEGORIES,
+  PRODUCT_IMAGE_MAX_SIZE,
+} from "@/constants/products";
 import { AddProductSchema } from "@/types/products";
 import { addProductSchema } from "@/validations/products";
 
 import { NumericFormat } from "react-number-format";
+
+import Image from "next/image";
+
+import Dropzone from "react-dropzone";
 
 const ProductForm = () => {
   const form = useForm<AddProductSchema>({
@@ -50,6 +57,7 @@ const ProductForm = () => {
       description: "",
       category: "",
       price: "",
+      images: [],
     },
   });
 
@@ -65,7 +73,7 @@ const ProductForm = () => {
           Add product
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[640px]">
+      <DialogContent className="max-w-[600px]">
         <DialogHeader>
           <DialogTitle>Add Product to Catalog</DialogTitle>
           <DialogDescription>
@@ -75,8 +83,8 @@ const ProductForm = () => {
         </DialogHeader>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-4"
+            onSubmit={form.handleSubmit(handleSubmit)}
           >
             <FormField
               control={form.control}
@@ -87,7 +95,7 @@ const ProductForm = () => {
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Tell us a little bit about your product name"
+                      placeholder="Tell us about your product name"
                       autoComplete="off"
                       {...field}
                     />
@@ -104,7 +112,7 @@ const ProductForm = () => {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Tell us a little bit about your product description"
+                      placeholder="Tell us about your product description"
                       {...field}
                     />
                   </FormControl>
@@ -112,7 +120,7 @@ const ProductForm = () => {
                 </FormItem>
               )}
             />
-            <div className="mt-2 flex gap-x-2">
+            <div className="flex gap-x-2">
               <FormField
                 control={form.control}
                 name="category"
@@ -134,7 +142,7 @@ const ProductForm = () => {
                           />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent position="item-aligned">
+                      <SelectContent>
                         {PRODUCT_CATEGORIES.map((category) => (
                           <SelectItem
                             key={category.title}
@@ -178,10 +186,80 @@ const ProductForm = () => {
                 )}
               />
             </div>
+            <FormField
+              control={form.control}
+              name="images"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Images</FormLabel>
+                  <FormControl>
+                    <Dropzone
+                      accept={{
+                        "image/*": [".png", ".jpg", ".jpeg"],
+                      }}
+                      maxSize={PRODUCT_IMAGE_MAX_SIZE}
+                      onDrop={field.onChange}
+                    >
+                      {({ getRootProps, getInputProps }) => (
+                        <>
+                          <div
+                            className="cursor-pointer rounded-md border-2 border-dotted p-4 text-center"
+                            {...getRootProps()}
+                          >
+                            <Input onBlur={field.onBlur} {...getInputProps()} />
+                            <span className="text-sm text-muted-foreground">
+                              Drag & drop some images here or click to select
+                              images
+                            </span>
+                          </div>
+                          <div className="flex gap-x-4">
+                            {field.value.map((file) => (
+                              <div
+                                key={file.name + Math.random.toString()}
+                                className="relative"
+                              >
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="absolute -right-2 -top-2 rounded-full"
+                                  onClick={() => {
+                                    field.onChange(
+                                      field.value.filter(
+                                        (f) => f.name != file.name,
+                                      ),
+                                    );
+                                  }}
+                                >
+                                  <X className="text-red-600" />
+                                </Button>
+                                <Image
+                                  alt={file.name}
+                                  width={100}
+                                  height={100}
+                                  src={URL.createObjectURL(file)}
+                                  onLoad={() => {
+                                    URL.revokeObjectURL(
+                                      URL.createObjectURL(file),
+                                    );
+                                  }}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </Dropzone>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <DialogFooter>
               <Button type="submit">Submit</Button>
               <DialogClose asChild>
-                <Button variant="destructive">Cancel</Button>
+                <Button className="focus-visible:ring-0" variant="destructive">
+                  Cancel
+                </Button>
               </DialogClose>
             </DialogFooter>
           </form>

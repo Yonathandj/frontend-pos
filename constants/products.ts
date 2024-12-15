@@ -26,3 +26,10 @@ export const PRODUCT_CATEGORIES = [
     backgroundColor: "bg-blue-200",
   },
 ];
+
+export const PRODUCT_IMAGE_MAX_SIZE = 10 * 1024 * 1024;
+export const PRODUCT_IMAGE_ACCEPTABLE_TYPES = [
+  "image/png",
+  "image/jpg",
+  "image/jpeg",
+];
