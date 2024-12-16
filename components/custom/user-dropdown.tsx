@@ -48,7 +48,7 @@ const UserDropdown = () => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Button variant="destructive" className="w-full">
+            <Button variant="destructive" className="w-full rounded-2xl">
               <LogOut />
               Log out
             </Button>

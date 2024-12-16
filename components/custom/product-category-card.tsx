@@ -3,11 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { ProductCategoryProps } from "@/types/products";
 
-const ProductCategoryCard = ({
-  category,
-}: {
-  category: ProductCategoryProps;
-}) => {
+const ProductCategoryCard = ({ category }: ProductCategoryProps) => {
   return (
     <Card className={`${category.backgroundColor}`}>
       <CardHeader>

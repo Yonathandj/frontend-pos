@@ -33,3 +33,6 @@ export const PRODUCT_IMAGE_ACCEPTABLE_TYPES = [
   "image/jpg",
   "image/jpeg",
 ];
+
+export const FIRST_FORM_STEP = "FIRST";
+export const SECOND_FORM_STEP = "SECOND";
