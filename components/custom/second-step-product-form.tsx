@@ -29,11 +29,11 @@ import {
   PRODUCT_CATEGORIES,
   PRODUCT_IMAGE_MAX_SIZE,
 } from "@/constants/products";
-import { ProductFormProps } from "@/types/products";
+import { ProductFormStepProps } from "@/types/products";
 
 import { ChevronLeft, X } from "lucide-react";
 
-const SecondStepProductForm = ({ form, setInStep }: ProductFormProps) => {
+const SecondStepProductForm = ({ form, setInStep }: ProductFormStepProps) => {
   const images = form.watch("images");
   useEffect(() => {
     return () => {

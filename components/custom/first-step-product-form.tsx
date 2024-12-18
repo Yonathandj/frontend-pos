@@ -12,11 +12,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
 import { SECOND_FORM_STEP } from "@/constants/products";
-import { ProductFormProps } from "@/types/products";
+import { ProductFormStepProps } from "@/types/products";
 
 import { ChevronRight } from "lucide-react";
 
-const FirstStepProductForm = ({ form, setInStep }: ProductFormProps) => {
+const FirstStepProductForm = ({ form, setInStep }: ProductFormStepProps) => {
   return (
     <>
       <FormField

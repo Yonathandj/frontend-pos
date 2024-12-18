@@ -15,6 +15,24 @@ export interface ProductCategoryProps {
 }
 
 export interface ProductFormProps {
+  products: AddProductSchema[];
+  setProducts: React.Dispatch<
+    React.SetStateAction<
+      {
+        name: string;
+        description: string;
+        category: string;
+        price: string;
+        images: {
+          file: File;
+          preview: string;
+        }[];
+      }[]
+    >
+  >;
+}
+
+export interface ProductFormStepProps {
   form: UseFormReturn<AddProductSchema>;
   setInStep: React.Dispatch<React.SetStateAction<string>>;
 }

@@ -22,10 +22,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { FIRST_FORM_STEP, SECOND_FORM_STEP } from "@/constants/products";
-import { AddProductSchema } from "@/types/products";
+import { AddProductSchema, ProductFormProps } from "@/types/products";
 import { addProductSchema } from "@/validations/products";
 
-const ProductForm = () => {
+const ProductForm = ({ products, setProducts }: ProductFormProps) => {
   const form = useForm<AddProductSchema>({
     resolver: zodResolver(addProductSchema),
     defaultValues: {
@@ -38,13 +38,15 @@ const ProductForm = () => {
   });
 
   const [inStep, setInStep] = useState<string>(FIRST_FORM_STEP);
+  const [openDIalog, setOpenDialog] = useState<boolean>(false);
 
   function handleSubmit(values: AddProductSchema) {
-    console.log(values);
+    setProducts([...products, values]);
+    setOpenDialog(false);
   }
 
   return (
-    <Dialog>
+    <Dialog open={openDIalog} onOpenChange={setOpenDialog}>
       <DialogTrigger asChild>
         <Button className="rounded-2xl">
           <PackagePlus />
