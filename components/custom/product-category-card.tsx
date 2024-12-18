@@ -12,7 +12,7 @@ const ProductCategoryCard = ({ category }: ProductCategoryProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <h3 className="text-lg font-medium">{category.title}</h3>
+        <h3 className="text-lg font-semibold">{category.title}</h3>
         <p className="text-sm text-gray-800">
           {category.total} {category.total < 2 ? "item" : "items"}
         </p>

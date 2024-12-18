@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 
 import Dropzone from "react-dropzone";
+import Image from "next/image";
+
 import { NumericFormat } from "react-number-format";
 
 import {
@@ -28,8 +30,6 @@ import {
   PRODUCT_IMAGE_MAX_SIZE,
 } from "@/constants/products";
 import { ProductFormProps } from "@/types/products";
-
-import Image from "next/image";
 
 import { ChevronLeft, X } from "lucide-react";
 
