@@ -1,21 +1,18 @@
 import { z } from "zod";
-import { addProductSchema } from "@/validations/products";
+import { productFormSchema } from "@/validations/products";
 
 import type { LucideIcon } from "lucide-react";
 
 import { UseFormReturn } from "react-hook-form";
 
-export interface ProductCategoryProps {
-  category: {
-    title: string;
-    icon: LucideIcon;
-    total: number;
-    backgroundColor: string;
-  };
+export interface ProductCategoryCardProps {
+  title: string;
+  icon: LucideIcon;
+  backgroundColor: string;
+  total: number;
 }
 
 export interface ProductFormProps {
-  products: AddProductSchema[];
   setProducts: React.Dispatch<
     React.SetStateAction<
       {
@@ -25,16 +22,24 @@ export interface ProductFormProps {
         price: string;
         images: {
           file: File;
-          preview: string;
         }[];
       }[]
     >
   >;
 }
 
-export interface ProductFormStepProps {
-  form: UseFormReturn<AddProductSchema>;
+export interface StepProductFormProps {
+  form: UseFormReturn<ProductFormSchema>;
   setInStep: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export type AddProductSchema = z.infer<typeof addProductSchema>;
+export interface ProductSchema {
+  name: string;
+  description: string;
+  category: string;
+  price: string;
+  images: {
+    file: File;
+  }[];
+}
+export type ProductFormSchema = z.infer<typeof productFormSchema>;

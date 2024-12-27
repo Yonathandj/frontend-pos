@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,8 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-
-import { LogOut } from "lucide-react";
 
 const UserDropdown = () => {
   return (
@@ -48,10 +47,8 @@ const UserDropdown = () => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Button variant="destructive" className="w-full rounded-2xl">
-              <LogOut />
-              Log out
-            </Button>
+            Sign out
+            <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

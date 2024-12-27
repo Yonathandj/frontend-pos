@@ -1,20 +1,21 @@
 import React from "react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { ProductCategoryProps } from "@/types/products";
+import { ProductCategoryCardProps } from "@/types/products";
 
-const ProductCategoryCard = ({ category }: ProductCategoryProps) => {
+const ProductCategoryCard = (props: ProductCategoryCardProps) => {
   return (
-    <Card className={`${category.backgroundColor}`}>
+    <Card className={`${props.backgroundColor}`}>
       <CardHeader>
         <CardTitle>
-          <category.icon className="h-10 w-10 rounded-full bg-white p-2" />
+          <props.icon className="h-10 w-10 rounded-full bg-white p-2" />
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <h3 className="text-lg font-semibold">{category.title}</h3>
-        <p className="text-sm text-gray-800">
-          {category.total} {category.total < 2 ? "item" : "items"}
+        <h3 className="text-lg font-semibold">{props.title}</h3>
+        <p className="text-sm">
+          {props.total} {props.total < 2 ? "item" : "items"}
         </p>
       </CardContent>
     </Card>

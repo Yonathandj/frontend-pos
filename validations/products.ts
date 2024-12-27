@@ -6,7 +6,7 @@ import {
   PRODUCT_IMAGE_MAX_SIZE,
 } from "@/constants/products";
 
-export const addProductSchema = z.object({
+export const productFormSchema = z.object({
   name: z
     .string()
     .trim()

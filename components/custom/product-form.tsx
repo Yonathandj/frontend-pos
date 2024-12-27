@@ -2,9 +2,6 @@
 
 import React, { useState } from "react";
 
-import FirstStepProductForm from "@/components/custom/first-step-product-form";
-import SecondStepProductForm from "@/components/custom/second-step-product-form";
-
 import { Button } from "@/components/ui/button";
 import {
   DialogDescription,
@@ -16,18 +13,21 @@ import {
 } from "@/components/ui/dialog";
 import { Form } from "@/components/ui/form";
 
-import { PackagePlus } from "lucide-react";
+import FirstStepProductForm from "@/components/custom/first-step-product-form";
+import SecondStepProductForm from "@/components/custom/second-step-product-form";
+
+import { FIRST_FORM_STEP, SECOND_FORM_STEP } from "@/constants/products";
+import { ProductFormSchema, ProductFormProps } from "@/types/products";
+import { productFormSchema } from "@/validations/products";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { FIRST_FORM_STEP, SECOND_FORM_STEP } from "@/constants/products";
-import { AddProductSchema, ProductFormProps } from "@/types/products";
-import { addProductSchema } from "@/validations/products";
+import { PackagePlus } from "lucide-react";
 
-const ProductForm = ({ products, setProducts }: ProductFormProps) => {
-  const form = useForm<AddProductSchema>({
-    resolver: zodResolver(addProductSchema),
+const ProductForm = ({ setProducts }: ProductFormProps) => {
+  const form = useForm<ProductFormSchema>({
+    resolver: zodResolver(productFormSchema),
     defaultValues: {
       name: "",
       description: "",
@@ -38,15 +38,32 @@ const ProductForm = ({ products, setProducts }: ProductFormProps) => {
   });
 
   const [inStep, setInStep] = useState<string>(FIRST_FORM_STEP);
-  const [openDIalog, setOpenDialog] = useState<boolean>(false);
+  const [openFormDialog, setOpenFormDialog] = useState<boolean>(false);
 
-  function handleSubmit(values: AddProductSchema) {
-    setProducts([...products, values]);
-    setOpenDialog(false);
+  function handleSubmit(values: ProductFormSchema) {
+    setProducts((prev) => [
+      ...prev,
+      {
+        name: values.name,
+        description: values.description,
+        category: values.category,
+        price: values.price,
+        images: values.images.map(({ file }) => ({ file })),
+      },
+    ]);
+
+    setOpenFormDialog(false);
+    form.reset({
+      name: "",
+      description: "",
+      category: "",
+      price: "",
+      images: [],
+    });
   }
 
   return (
-    <Dialog open={openDIalog} onOpenChange={setOpenDialog}>
+    <Dialog open={openFormDialog} onOpenChange={setOpenFormDialog}>
       <DialogTrigger asChild>
         <Button className="rounded-2xl">
           <PackagePlus />

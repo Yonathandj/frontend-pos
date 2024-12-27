@@ -1,4 +1,5 @@
 import React from "react";
+
 import ManageProducts from "@/pages/custom/manage-products";
 
 const Page = () => {

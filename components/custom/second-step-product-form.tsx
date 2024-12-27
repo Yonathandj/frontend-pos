@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
 
-import Dropzone from "react-dropzone";
-import Image from "next/image";
-
-import { NumericFormat } from "react-number-format";
-
 import {
   FormControl,
   FormDescription,
@@ -29,11 +24,16 @@ import {
   PRODUCT_CATEGORIES,
   PRODUCT_IMAGE_MAX_SIZE,
 } from "@/constants/products";
-import { ProductFormStepProps } from "@/types/products";
+import { StepProductFormProps } from "@/types/products";
+
+import Dropzone from "react-dropzone";
+import Image from "next/image";
+
+import { NumericFormat } from "react-number-format";
 
 import { ChevronLeft, X } from "lucide-react";
 
-const SecondStepProductForm = ({ form, setInStep }: ProductFormStepProps) => {
+const SecondStepProductForm = ({ form, setInStep }: StepProductFormProps) => {
   const images = form.watch("images");
   useEffect(() => {
     return () => {
@@ -159,12 +159,9 @@ const SecondStepProductForm = ({ form, setInStep }: ProductFormStepProps) => {
             </FormDescription>
             <FormMessage />
 
-            <div className="flex items-center gap-x-2">
-              {field.value.map((obj, index) => (
-                <div
-                  key={obj.file.name + index.toString()}
-                  className="relative"
-                >
+            <div className="flex items-center gap-x-4">
+              {field.value.map((obj) => (
+                <div key={obj.file.name + obj.file.size} className="relative">
                   <Button
                     variant="destructive"
                     size="icon"
@@ -181,11 +178,10 @@ const SecondStepProductForm = ({ form, setInStep }: ProductFormStepProps) => {
                     <X />
                   </Button>
                   <Image
-                    width={150}
-                    height={150}
+                    width={200}
+                    height={200}
                     src={obj.preview}
                     alt={obj.file.name}
-                    className="rounded-md"
                   />
                 </div>
               ))}
