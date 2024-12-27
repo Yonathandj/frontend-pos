@@ -15,10 +15,11 @@ import { Form } from "@/components/ui/form";
 
 import FirstStepProductForm from "@/components/custom/first-step-product-form";
 import SecondStepProductForm from "@/components/custom/second-step-product-form";
+import ConfirmationAlertDialog from "@/components/custom/confirmation-alert-dialog";
 
-import { FIRST_FORM_STEP, SECOND_FORM_STEP } from "@/constants/products";
-import { ProductFormSchema, ProductFormProps } from "@/types/products";
-import { productFormSchema } from "@/validations/products";
+import { FIRST_FORM_STEP, SECOND_FORM_STEP } from "@/constants/product";
+import { ProductFormSchema, ProductFormProps } from "@/types/product";
+import { productFormSchema } from "@/validations/product";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,8 +40,15 @@ const ProductForm = ({ setProducts }: ProductFormProps) => {
 
   const [inStep, setInStep] = useState<string>(FIRST_FORM_STEP);
   const [openFormDialog, setOpenFormDialog] = useState<boolean>(false);
+  const [openConfirmationDialog, setOpenConfirmationDialog] =
+    useState<boolean>(false);
 
-  function handleSubmit(values: ProductFormSchema) {
+  function handleSubmit() {
+    setOpenConfirmationDialog(true);
+  }
+
+  function handleSave() {
+    const values = form.getValues();
     setProducts((prev) => [
       ...prev,
       {
@@ -52,7 +60,9 @@ const ProductForm = ({ setProducts }: ProductFormProps) => {
       },
     ]);
 
+    setOpenConfirmationDialog(false);
     setOpenFormDialog(false);
+    setInStep(FIRST_FORM_STEP);
     form.reset({
       name: "",
       description: "",
@@ -63,35 +73,53 @@ const ProductForm = ({ setProducts }: ProductFormProps) => {
   }
 
   return (
-    <Dialog open={openFormDialog} onOpenChange={setOpenFormDialog}>
-      <DialogTrigger asChild>
-        <Button className="rounded-2xl">
-          <PackagePlus />
-          Add product
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="max-w-[650px]">
-        <DialogHeader>
-          <DialogTitle>Add Product to Catalog</DialogTitle>
-          <DialogDescription>
-            Please fill in the details of the new product you want to add to the
-            catalog.
-          </DialogDescription>
-        </DialogHeader>
-        <Form {...form}>
-          <form
-            className="space-y-4"
-            onSubmit={form.handleSubmit(handleSubmit)}
-          >
-            {inStep === FIRST_FORM_STEP ? (
-              <FirstStepProductForm form={form} setInStep={setInStep} />
-            ) : inStep == SECOND_FORM_STEP ? (
-              <SecondStepProductForm form={form} setInStep={setInStep} />
-            ) : null}
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+    <>
+      <Dialog open={openFormDialog} onOpenChange={setOpenFormDialog}>
+        <DialogTrigger asChild>
+          <Button className="rounded-2xl">
+            <PackagePlus />
+            Add product
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="max-w-[650px]">
+          <DialogHeader>
+            <DialogTitle>Add Product to Catalog</DialogTitle>
+            <DialogDescription>
+              Please fill in the details of the new product you want to add to
+              the catalog.
+            </DialogDescription>
+          </DialogHeader>
+          <Form {...form}>
+            <form
+              className="space-y-4"
+              onSubmit={form.handleSubmit(handleSubmit)}
+            >
+              {inStep === FIRST_FORM_STEP ? (
+                <FirstStepProductForm
+                  form={form}
+                  setInStep={setInStep}
+                  setOpenFormDialog={setOpenFormDialog}
+                />
+              ) : inStep == SECOND_FORM_STEP ? (
+                <SecondStepProductForm
+                  form={form}
+                  setInStep={setInStep}
+                  setOpenFormDialog={setOpenFormDialog}
+                />
+              ) : null}
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+      <ConfirmationAlertDialog
+        title="Save product?"
+        description="This product will be saved to your catalog. You can always update the details later."
+        actionMsg="Save"
+        actionFn={handleSave}
+        openConfirmationDialog={openConfirmationDialog}
+        setOpenConfirmationDialog={setOpenConfirmationDialog}
+      />
+    </>
   );
 };
 

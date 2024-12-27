@@ -4,7 +4,7 @@ import {
   PRODUCT_CATEGORIES,
   PRODUCT_IMAGE_ACCEPTABLE_TYPES,
   PRODUCT_IMAGE_MAX_SIZE,
-} from "@/constants/products";
+} from "@/constants/product";
 
 export const productFormSchema = z.object({
   name: z

@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { productFormSchema } from "@/validations/products";
-
-import type { LucideIcon } from "lucide-react";
 
 import { UseFormReturn } from "react-hook-form";
+import { productFormSchema } from "@/validations/product";
+
+import type { LucideIcon } from "lucide-react";
 
 export interface ProductCategoryCardProps {
   title: string;
@@ -31,6 +31,7 @@ export interface ProductFormProps {
 export interface StepProductFormProps {
   form: UseFormReturn<ProductFormSchema>;
   setInStep: React.Dispatch<React.SetStateAction<string>>;
+  setOpenFormDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface ProductSchema {
@@ -42,4 +43,5 @@ export interface ProductSchema {
     file: File;
   }[];
 }
+
 export type ProductFormSchema = z.infer<typeof productFormSchema>;

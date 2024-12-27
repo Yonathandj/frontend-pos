@@ -2,7 +2,7 @@ import React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { ProductCategoryCardProps } from "@/types/products";
+import { ProductCategoryCardProps } from "@/types/product";
 
 const ProductCategoryCard = (props: ProductCategoryCardProps) => {
   return (

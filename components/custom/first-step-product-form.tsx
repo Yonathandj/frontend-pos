@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   FormControl,
   FormDescription,
@@ -11,8 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
-import { SECOND_FORM_STEP } from "@/constants/products";
-import { StepProductFormProps } from "@/types/products";
+import { SECOND_FORM_STEP } from "@/constants/product";
+import { StepProductFormProps } from "@/types/product";
 
 import { ChevronRight } from "lucide-react";
 

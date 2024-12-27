@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   FormControl,
@@ -16,15 +16,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+
+import ConfirmationAlertDialog from "@/components/custom/confirmation-alert-dialog";
 
 import {
   FIRST_FORM_STEP,
   PRODUCT_CATEGORIES,
   PRODUCT_IMAGE_MAX_SIZE,
-} from "@/constants/products";
-import { StepProductFormProps } from "@/types/products";
+} from "@/constants/product";
+import { StepProductFormProps } from "@/types/product";
 
 import Dropzone from "react-dropzone";
 import Image from "next/image";
@@ -33,13 +34,47 @@ import { NumericFormat } from "react-number-format";
 
 import { ChevronLeft, X } from "lucide-react";
 
-const SecondStepProductForm = ({ form, setInStep }: StepProductFormProps) => {
+const SecondStepProductForm = ({
+  form,
+  setInStep,
+  setOpenFormDialog,
+}: StepProductFormProps) => {
   const images = form.watch("images");
   useEffect(() => {
     return () => {
       images.forEach((image) => URL.revokeObjectURL(image.preview));
     };
   }, [images]);
+
+  const [openConfirmationDialog, setOpenConfirmationDialog] =
+    useState<boolean>(false);
+
+  function handleValidateCancelation() {
+    if (
+      form.getValues("name").trim() !== "" ||
+      form.getValues("description").trim() !== "" ||
+      form.getValues("category").trim() !== "" ||
+      form.getValues("price").trim() !== "" ||
+      form.getValues("images").length > 0
+    ) {
+      setOpenConfirmationDialog(true);
+    } else {
+      setOpenFormDialog(false);
+    }
+  }
+
+  function handleCancelation() {
+    setOpenConfirmationDialog(false);
+    setOpenFormDialog(false);
+    setInStep(FIRST_FORM_STEP);
+    form.reset({
+      name: "",
+      description: "",
+      category: "",
+      price: "",
+      images: [],
+    });
+  }
 
   return (
     <>
@@ -204,16 +239,24 @@ const SecondStepProductForm = ({ form, setInStep }: StepProductFormProps) => {
           <Button type="submit" className="rounded-2xl">
             Submit
           </Button>
-          <DialogClose asChild>
-            <Button
-              className="ml-2 rounded-2xl focus-visible:ring-0"
-              variant="destructive"
-            >
-              Cancel
-            </Button>
-          </DialogClose>
+          <Button
+            variant="destructive"
+            type="button"
+            className="ml-2 rounded-2xl"
+            onClick={() => handleValidateCancelation()}
+          >
+            Cancel
+          </Button>
         </div>
       </div>
+      <ConfirmationAlertDialog
+        title="Discard changes?"
+        description="All unsaved changes will be lost. You can always come back and fill out the form again."
+        actionMsg="Discard"
+        actionFn={handleCancelation}
+        openConfirmationDialog={openConfirmationDialog}
+        setOpenConfirmationDialog={setOpenConfirmationDialog}
+      />
     </>
   );
 };

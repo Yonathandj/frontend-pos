@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import ProductCategoryCard from "@/components/custom/product-category-card";
 import ProductForm from "@/components/custom/product-form";
 
-import { PRODUCT_CATEGORIES } from "@/constants/products";
-import { ProductSchema } from "@/types/products";
+import { PRODUCT_CATEGORIES } from "@/constants/product";
+import { ProductSchema } from "@/types/product";
 
 const ManageProducts = () => {
   const [products, setProducts] = useState<ProductSchema[]>([]);

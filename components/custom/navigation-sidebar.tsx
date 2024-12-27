@@ -17,7 +17,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { SIDEBAR_GROUPS, SIDEBAR_ROUTES } from "@/constants/routes";
+import { SIDEBAR_GROUPS, SIDEBAR_ROUTES } from "@/constants/route";
 
 const NavigationSidebar = () => {
   const { open } = useSidebar();
