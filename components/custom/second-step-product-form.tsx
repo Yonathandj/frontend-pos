@@ -60,6 +60,7 @@ const SecondStepProductForm = ({
       setOpenConfirmationDialog(true);
     } else {
       setOpenFormDialog(false);
+      setInStep(FIRST_FORM_STEP);
     }
   }
 
