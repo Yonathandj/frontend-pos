@@ -1,6 +1,7 @@
 import React from "react";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 import NavigationSidebar from "@/components/custom/navigation-sidebar";
 import UserDropdown from "@/components/custom/user-dropdown";
@@ -22,6 +23,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             </nav>
           </header>
           <main className="mt-4">{children}</main>
+          <Toaster />
         </div>
       </SidebarProvider>
     </>

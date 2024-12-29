@@ -593,6 +593,7 @@ const SidebarMenuButton = React.forwardRef<
           align="center"
           hidden={state !== "collapsed" || isMobile}
           {...tooltip}
+          className="rounded-2xl"
         />
       </Tooltip>
     );

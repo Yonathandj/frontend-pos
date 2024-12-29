@@ -61,6 +61,13 @@ const SecondStepProductForm = ({
     } else {
       setOpenFormDialog(false);
       setInStep(FIRST_FORM_STEP);
+      form.reset({
+        name: "",
+        description: "",
+        category: "",
+        price: "",
+        images: [],
+      });
     }
   }
 

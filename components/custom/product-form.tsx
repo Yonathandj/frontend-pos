@@ -24,6 +24,8 @@ import { productFormSchema } from "@/validations/product";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { useToast } from "@/hooks/use-toast";
+
 import { PackagePlus } from "lucide-react";
 
 const ProductForm = ({ setProducts }: ProductFormProps) => {
@@ -37,6 +39,8 @@ const ProductForm = ({ setProducts }: ProductFormProps) => {
       images: [],
     },
   });
+
+  const { toast } = useToast();
 
   const [inStep, setInStep] = useState<string>(FIRST_FORM_STEP);
   const [openFormDialog, setOpenFormDialog] = useState<boolean>(false);
@@ -69,6 +73,11 @@ const ProductForm = ({ setProducts }: ProductFormProps) => {
       category: "",
       price: "",
       images: [],
+    });
+
+    toast({
+      title: "Product saved successfully",
+      description: "The product has been saved to your catalog.",
     });
   }
 

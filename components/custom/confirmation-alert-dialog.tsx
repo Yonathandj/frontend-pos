@@ -32,8 +32,8 @@ const ConfirmationAlertDialog = ({
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => actionFn()}>
+          <AlertDialogCancel className="rounded-2xl">Cancel</AlertDialogCancel>
+          <AlertDialogAction className="rounded-2xl" onClick={() => actionFn()}>
             {actionMsg}
           </AlertDialogAction>
         </AlertDialogFooter>
