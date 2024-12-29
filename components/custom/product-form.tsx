@@ -60,7 +60,8 @@ const ProductForm = ({ setProducts }: ProductFormProps) => {
         description: values.description,
         category: values.category,
         price: values.price,
-        images: values.images.map(({ file }) => ({ file })),
+        images: values.images,
+        // images: values.images.map(({ file }) => ({ file, preview: "" })),
       },
     ]);
 

@@ -42,7 +42,11 @@ const SecondStepProductForm = ({
   const images = form.watch("images");
   useEffect(() => {
     return () => {
-      images.forEach((image) => URL.revokeObjectURL(image.preview));
+      images.forEach((image) => {
+        if (URL.revokeObjectURL) {
+          URL.revokeObjectURL(image.preview);
+        }
+      });
     };
   }, [images]);
 

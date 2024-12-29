@@ -22,6 +22,7 @@ export interface ProductFormProps {
         price: string;
         images: {
           file: File;
+          preview: string;
         }[];
       }[]
     >
@@ -34,14 +35,22 @@ export interface StepProductFormProps {
   setOpenFormDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface ProductSchema {
-  name: string;
-  description: string;
-  category: string;
-  price: string;
-  images: {
-    file: File;
-  }[];
+export interface ProductDetailCardProps {
+  product: ProductFormSchema;
+  setProducts: React.Dispatch<
+    React.SetStateAction<
+      {
+        name: string;
+        description: string;
+        category: string;
+        price: string;
+        images: {
+          file: File;
+          preview: string;
+        }[];
+      }[]
+    >
+  >;
 }
 
 export type ProductFormSchema = z.infer<typeof productFormSchema>;

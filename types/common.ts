@@ -6,3 +6,9 @@ export interface ConfirmationAlertDialogProps {
   openConfirmationDialog: boolean;
   setOpenConfirmationDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export interface InfoTooltipProps {
+  children: React.ReactNode;
+  content: string;
+  side: "bottom" | "left" | "right" | "top";
+}
