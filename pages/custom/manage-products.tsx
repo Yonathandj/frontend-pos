@@ -1,29 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import ProductCategoryCard from "@/components/custom/product-category-card";
 import ProductForm from "@/components/custom/product-form";
+import ProductDetailCard from "@/components/custom/product-detail-card";
 
 import { PRODUCT_CATEGORIES } from "@/constants/product";
 import { ProductFormSchema } from "@/types/product";
-import ProductDetailCard from "@/components/custom/product-detail-card";
 
 const ManageProducts = () => {
   const [products, setProducts] = useState<ProductFormSchema[]>([]);
-
-  useEffect(() => {
-    // do api request & set into useState
-    return () => {
-      products.forEach((product) => {
-        product.images.forEach((image) => {
-          if (URL.revokeObjectURL) {
-            URL.revokeObjectURL(image.preview);
-          }
-        });
-      });
-    };
-  }, [products]);
   return (
     <>
       <div className="mt-4 grid grid-cols-4 gap-x-2">
@@ -44,15 +31,23 @@ const ManageProducts = () => {
         <ProductForm setProducts={setProducts} />
       </div>
       <div>
-        <div className="mt-4 grid grid-cols-4 gap-x-2">
-          {products.map((product) => (
-            <ProductDetailCard
-              key={product.name}
-              product={product}
-              setProducts={setProducts}
-            />
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <div className="mt-4 grid grid-cols-4 gap-x-2 rounded-md bg-sidebar-accent p-4">
+            {products.map((product) => (
+              <ProductDetailCard
+                key={product.name}
+                product={product}
+                setProducts={setProducts}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-4 grid items-center justify-center rounded-md bg-sidebar-accent p-4">
+            <span className="text-xs text-muted-foreground">
+              The catalog is empty. Start by adding your first product now!
+            </span>
+          </div>
+        )}
       </div>
     </>
   );

@@ -26,7 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useToast } from "@/hooks/use-toast";
 
-import { PackagePlus } from "lucide-react";
+import { BellRing, PackagePlus } from "lucide-react";
 
 const ProductForm = ({ setProducts }: ProductFormProps) => {
   const form = useForm<ProductFormSchema>({
@@ -53,8 +53,8 @@ const ProductForm = ({ setProducts }: ProductFormProps) => {
 
   function handleSave() {
     const values = form.getValues();
-    setProducts((prev) => [
-      ...prev,
+    setProducts((products) => [
+      ...products,
       {
         name: values.name,
         description: values.description,
@@ -92,13 +92,37 @@ const ProductForm = ({ setProducts }: ProductFormProps) => {
           </Button>
         </DialogTrigger>
         <DialogContent className="max-w-[650px]">
-          <DialogHeader>
-            <DialogTitle>Add Product to Catalog</DialogTitle>
-            <DialogDescription>
-              Please fill in the details of the new product you want to add to
-              the catalog.
-            </DialogDescription>
-          </DialogHeader>
+          <div className="flex items-center gap-x-8">
+            <Button
+              variant={inStep === FIRST_FORM_STEP ? "default" : "secondary"}
+              size="icon"
+              className="relative h-6 w-6 rounded-full"
+            >
+              {(form.getFieldState("name").invalid ||
+                form.getFieldState("description").invalid) &&
+              inStep === SECOND_FORM_STEP ? (
+                <BellRing className="animate-swing absolute -right-4 -top-2 fill-destructive text-destructive" />
+              ) : null}
+              1
+            </Button>
+            <div className="h-[2px] w-[100px] bg-primary"></div>
+            <Button
+              variant={inStep === SECOND_FORM_STEP ? "default" : "secondary"}
+              size="icon"
+              className="h-6 w-6 rounded-full"
+            >
+              2
+            </Button>
+          </div>
+          {inStep === FIRST_FORM_STEP ? (
+            <DialogHeader>
+              <DialogTitle>Add Product to Catalog</DialogTitle>
+              <DialogDescription>
+                Please fill in the details of the new product you want to add to
+                the catalog.
+              </DialogDescription>
+            </DialogHeader>
+          ) : null}
           <Form {...form}>
             <form
               className="space-y-4"

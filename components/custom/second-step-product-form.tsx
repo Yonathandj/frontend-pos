@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 
 import {
@@ -17,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 import ConfirmationAlertDialog from "@/components/custom/confirmation-alert-dialog";
 
@@ -212,7 +215,7 @@ const SecondStepProductForm = ({
                   <Button
                     variant="destructive"
                     size="icon"
-                    className="absolute -right-2 -top-2 h-6 w-6 rounded-full"
+                    className="absolute -right-2 -top-2 z-10 h-6 w-6 rounded-full"
                     onClick={() => {
                       URL.revokeObjectURL(obj.preview);
                       field.onChange(
@@ -224,12 +227,16 @@ const SecondStepProductForm = ({
                   >
                     <X />
                   </Button>
-                  <Image
-                    width={200}
-                    height={200}
-                    src={obj.preview}
-                    alt={obj.file.name}
-                  />
+                  <figure className="w-[100px]">
+                    <AspectRatio ratio={1 / 1}>
+                      <Image
+                        fill
+                        src={obj.preview}
+                        alt={obj.file.name}
+                        className="rounded-md object-cover"
+                      />
+                    </AspectRatio>
+                  </figure>
                 </div>
               ))}
             </div>

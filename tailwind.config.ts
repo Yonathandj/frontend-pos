@@ -67,6 +67,31 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        swing: "swing 2s ease-out infinite",
+      },
+      keyframes: {
+        swing: {
+          "20%": {
+            transform: "rotate3d(0, 0, 1, 15deg)",
+          },
+
+          "40%": {
+            transform: "rotate3d(0, 0, 1, -10deg)",
+          },
+
+          "60%": {
+            transform: "rotate3d(0, 0, 1, 5deg)",
+          },
+
+          "80%": {
+            transform: "rotate3d(0, 0, 1, -5deg)",
+          },
+          to: {
+            transform: "rotate3d(0, 0, 1, 0deg)",
+          },
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
